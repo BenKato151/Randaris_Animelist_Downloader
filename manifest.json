@@ -1,0 +1,27 @@
+{
+  "name": "Randaris Animelist Downloader",
+  "version": "0.1",
+  "description": "You can download your animelist easily with this extension.",
+  "permissions": ["declarativeContent", "storage", "https://randaris-app/*", "tabs", "<all_urls>"],
+  "background": {
+      "scripts": ["Scripts/background.js", "Scripts/download.js", "Scripts/getPagesSource.js"],
+      "persistent": false
+    },
+  "manifest_version": 2,
+  "page_action": {
+          "default_icon": {
+            "16": "images/get_started16.png",
+            "32": "images/get_started32.png",
+            "48": "images/get_started48.png",
+            "128": "images/get_started128.png"
+          },
+          "default_title": "Randaris Animelist Downloader",
+          "default_popup": "index.html"
+        },
+  "icons": {
+      "16": "images/get_started16.png",
+      "32": "images/get_started32.png",
+      "48": "images/get_started48.png",
+      "128": "images/get_started128.png"
+    }
+}
