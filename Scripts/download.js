@@ -6,7 +6,7 @@ function getAnimelist() {
   chrome.runtime.onMessage.addListener(function(request, sender) {
     if (request.action == "getSource") {
       saving.innerHTML = request.source;
-      download();
+      searchThroughList();
       //Downloading must be implemented!
       message.innerHTML = "Success! <br> Not implemented!"
     }
@@ -21,18 +21,28 @@ function getAnimelist() {
   });
 }
 
-function download(){
-  var completed = document.querySelector('[data-id="completed"]');
-  var onhold = document.querySelector('[data-id="on-hold"]');
-  var dropped = document.querySelector('[data-id="dropped"]');
-  var currently = document.querySelector('[data-id="currently-watching"]');
-  var plan_to_watch = document.querySelector('[data-id="plan-to-watch"]');
+function searchThroughList(){
+  var completed_table = document.querySelector('[data-id="completed"]');
+  var onhold_table = document.querySelector('[data-id="on-hold"]');
+  var dropped_table = document.querySelector('[data-id="dropped"]');
+  var currently_table = document.querySelector('[data-id="currently-watching"]');
+  var plan_to_watch_table = document.querySelector('[data-id="plan-to-watch"]');
 
-  Check("Completed: \n", completed);
-  Check("On Hold: \n", onhold);
-  Check("Dropped: \n", dropped);
-  Check("Currently Watching: \n", currently);
-  Check("Plan to watch: \n", plan_to_watch);
+  var completed_names = [];
+  getAnimeNames(completed_table, completed_names);
+  
+  var onhold_names = [];
+  getAnimeNames(onhold_table, onhold_names);
+
+  var dropped_names = [];
+  getAnimeNames(dropped_table, dropped_names);
+
+  var currently_names = [];
+  getAnimeNames(currently_table, currently_names);
+
+  var plan_to_watch_names = [];
+  getAnimeNames(plan_to_watch_table, plan_to_watch_names);
+
   /*
     Search for :data-id="completed", "currently-watching","on-hold", "dropped", "plan-to-watch"
     and if exists, safe the output in a variable.
@@ -49,11 +59,8 @@ function download(){
 
 }
 
-function Check(tablename, table) {
-  if(table != null) {
-    console.log(tablename + table.innerHTML);
-  }
-  else {
-    console.log(tablename + " isnt there!");
-  }
+function getAnimeNames(table, targetarray) {
+  $(table).find('a').each(function() {
+    targetarray.push( $(this).text() );
+  });
 }
