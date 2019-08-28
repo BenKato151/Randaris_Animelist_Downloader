@@ -1,6 +1,5 @@
 var message = document.querySelector('.console');
 var saving = document.querySelector('.saving');
-var filename = document.getElementById('filename').value;
 
 function getAnimelist() {
   chrome.runtime.onMessage.addListener(function(request, sender) {
@@ -36,7 +35,7 @@ function searchThroughList() {
   var onhold_names = [];
   var onhold_episodes = [];
   getAnimeNames(onhold_table, onhold_names);
-  getAnimeEpisodes(onhold_table);
+  getAnimeEpisodes(onhold_table, onhold_episodes);
 
   var dropped_names = [];
   var dropped_episodes = [];
@@ -56,15 +55,12 @@ function searchThroughList() {
   var column_headers = ["Completed", "Currently Watching", "On Hold", "Dropped", "Plan to Watch"];
 
   var tabledata = [
-    column_headers,
-    completed_names,
-    currently_names,
-    onhold_names,
-    dropped_names,
-    plan_to_watch_names
+    [completed_names, completed_episodes],
+    [currently_names, currently_episodes],
+    [onhold_names, onhold_episodes],
+    [dropped_names, dropped_episodes],
+    [plan_to_watch_names, plan_to_watch_episodes]
   ];
-
-  console.log(completed_episodes);
 }
 
 function getAnimeNames(table, targetarray) {
@@ -74,7 +70,9 @@ function getAnimeNames(table, targetarray) {
 }
 
 function getAnimeEpisodes(table, targetarray){
-  //Get: episodes watched / full
+  $(table).find('.list-watched-ep').each(function(){
+    targetarray.push($(this).attr('data-progress') + $(this).text());
+  });
 }
 
 function exportCSV(tabledata) {
@@ -87,7 +85,5 @@ function exportCSV(tabledata) {
       | anime_name | episodes_watched |
 
     Download it within the same button.
-
-
   */
 }

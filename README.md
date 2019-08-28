@@ -15,3 +15,4 @@ How to get involved:
 
 TODO:
   Replace icons (example icons from google devs)
+  Adding an Export as .csv (this is really hard in JavaScript)
