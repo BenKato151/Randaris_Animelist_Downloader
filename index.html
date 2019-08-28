@@ -7,11 +7,15 @@
   </head>
   <body>
     <div class="container">
-      <p>Go to your profile page and click on Download:</p>
+      <p>Go to your profile page and click on Download</p>
       <div class="settings">
-        <input type="submit" onclick="getAnimelist()" value="Download"/>
+        Insert your profile name or the name you want to give the file here:
+        <br>
+        <input type="text" id="filename" value="" placeholder="data name">
+        <p>
+          <input type="submit" onclick="getAnimelist()" value="Download"/>
+        </p>
       </div>
-      <br>
     </div>
     <div class="console">
 

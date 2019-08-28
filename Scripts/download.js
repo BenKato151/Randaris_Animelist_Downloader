@@ -1,14 +1,14 @@
 var message = document.querySelector('.console');
 var saving = document.querySelector('.saving');
+var filename = document.getElementById('filename').value;
 
 function getAnimelist() {
-  var htmlsource;
   chrome.runtime.onMessage.addListener(function(request, sender) {
     if (request.action == "getSource") {
       saving.innerHTML = request.source;
       searchThroughList();
       //Downloading must be implemented!
-      message.innerHTML = "Success! <br> Not implemented!"
+      message.innerText = "Success!"
     }
   });
 
@@ -21,7 +21,7 @@ function getAnimelist() {
   });
 }
 
-function searchThroughList(){
+function searchThroughList() {
   var completed_table = document.querySelector('[data-id="completed"]');
   var onhold_table = document.querySelector('[data-id="on-hold"]');
   var dropped_table = document.querySelector('[data-id="dropped"]');
@@ -29,38 +29,65 @@ function searchThroughList(){
   var plan_to_watch_table = document.querySelector('[data-id="plan-to-watch"]');
 
   var completed_names = [];
+  var completed_episodes = [];
   getAnimeNames(completed_table, completed_names);
-  
+  getAnimeEpisodes(completed_table, completed_episodes);
+
   var onhold_names = [];
+  var onhold_episodes = [];
   getAnimeNames(onhold_table, onhold_names);
+  getAnimeEpisodes(onhold_table);
 
   var dropped_names = [];
+  var dropped_episodes = [];
   getAnimeNames(dropped_table, dropped_names);
+  getAnimeEpisodes(dropped_table, dropped_episodes);
 
   var currently_names = [];
+  var currently_episodes = [];
   getAnimeNames(currently_table, currently_names);
+  getAnimeEpisodes(currently_table, currently_episodes);
 
   var plan_to_watch_names = [];
+  var plan_to_watch_episodes = [];
   getAnimeNames(plan_to_watch_table, plan_to_watch_names);
+  getAnimeEpisodes(plan_to_watch_table, plan_to_watch_episodes);
 
-  /*
-    Search for :data-id="completed", "currently-watching","on-hold", "dropped", "plan-to-watch"
-    and if exists, safe the output in a variable.
-    Then search inside of it for anchors-text (names of anime).
-    and (watched/full) episodes.
-    After that save the data-id's name and under that the name : episodes
-    Write that in a single csv.
-    Download it.
+  var column_headers = ["Completed", "Currently Watching", "On Hold", "Dropped", "Plan to Watch"];
 
-    More functions recommended.
-    e.g.  ExportCSV()
-          //SeachTable(data-id_name)
- */
+  var tabledata = [
+    column_headers,
+    completed_names,
+    currently_names,
+    onhold_names,
+    dropped_names,
+    plan_to_watch_names
+  ];
 
+  console.log(completed_episodes);
 }
 
 function getAnimeNames(table, targetarray) {
   $(table).find('a').each(function() {
-    targetarray.push( $(this).text() );
+    targetarray.push($(this).text());
   });
+}
+
+function getAnimeEpisodes(table, targetarray){
+  //Get: episodes watched / full
+}
+
+function exportCSV(tabledata) {
+  /*
+    Write the tabledata above in a single -filename-.csv
+
+    schema:
+
+      | table_headers |
+      | anime_name | episodes_watched |
+
+    Download it within the same button.
+
+
+  */
 }
