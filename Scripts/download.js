@@ -1,11 +1,12 @@
 var message = document.querySelector('.console');
 var saving = document.querySelector('.saving');
+var filename = document.getElementById("filename");
 
 function getAnimelist() {
   chrome.runtime.onMessage.addListener(function(request, sender) {
     if (request.action == "getSource") {
       saving.innerHTML = request.source;
-      searchThroughList();
+      exportCSV(searchThroughList());
       //Downloading must be implemented!
       message.innerText = "Success!"
     }
@@ -52,15 +53,13 @@ function searchThroughList() {
   getAnimeNames(plan_to_watch_table, plan_to_watch_names);
   getAnimeEpisodes(plan_to_watch_table, plan_to_watch_episodes);
 
-  var column_headers = ["Completed", "Currently Watching", "On Hold", "Dropped", "Plan to Watch"];
-
   var tabledata = [
-    [completed_names, completed_episodes],
-    [currently_names, currently_episodes],
-    [onhold_names, onhold_episodes],
-    [dropped_names, dropped_episodes],
-    [plan_to_watch_names, plan_to_watch_episodes]
+    completed_names, completed_episodes, currently_names, currently_episodes,
+    onhold_names, onhold_episodes, dropped_names, dropped_episodes,
+    plan_to_watch_names, plan_to_watch_episodes
   ];
+
+  return tabledata;
 }
 
 function getAnimeNames(table, targetarray) {
@@ -76,14 +75,24 @@ function getAnimeEpisodes(table, targetarray){
 }
 
 function exportCSV(tabledata) {
+  var csv = 'Completed;;Currently Watching;;On Hold;;Dropped;;Plan to Watch\n';
+  for (var i = 0; i < tabledata[0].length; i++) {
+    csv += tabledata[0][i] + ";\n";
+  }
+
   /*
-    Write the tabledata above in a single -filename-.csv
+          schema:
+          Completed | | Currently Watching | | On Hold | | Dropped | | Plan to Watch|
+          name | episodes|name | episodes|name | episodes|name | episodes|name | episodes|
+          ...|...
+          ..............
 
-    schema:
-
-      | table_headers |
-      | anime_name | episodes_watched |
-
-    Download it within the same button.
   */
+  console.log(csv);
+  if (filename.value != "") {
+    //Download with <filename.value + ".csv"> as filename
+  }
+  else {
+    //Download with <filename.value = Randaris-Animelist.csv>
+  }
 }
