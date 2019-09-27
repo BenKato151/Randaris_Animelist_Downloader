@@ -16,5 +16,4 @@ How to get involved:
 TODO:
   Replace icons (example icons from google devs)
   CSV Export have to be fixed!
-  Download in Chrome doesn't work.
-  
+  Can't formate the optimal schema 

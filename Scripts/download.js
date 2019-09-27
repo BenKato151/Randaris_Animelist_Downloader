@@ -1,14 +1,17 @@
+//Downloader for randaris.app animelists
+
 var message = document.querySelector('.console');
 var saving = document.querySelector('.saving');
 var filename = document.getElementById("filename");
 
 function getAnimelist() {
+  console.log("--- INIT ---");
   chrome.runtime.onMessage.addListener(function(request, sender) {
     if (request.action == "getSource") {
       saving.innerHTML = request.source;
-      exportCSV(searchThroughList());
-      //Downloading must be implemented!
-      message.innerText = "Success!"
+      downloadcsv(filename.value,
+        exportCSV(searchThroughList())
+      );
     }
   });
 
@@ -16,7 +19,8 @@ function getAnimelist() {
     file: "Scripts/getPagesSource.js"
   }, function() {
     if (chrome.runtime.lastError) {
-      message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
+      message.innerText = 'Something went wrong!';
+      console.log('Error:\n' + chrome.runtime.lastError.message);
     }
   });
 }
@@ -54,8 +58,10 @@ function searchThroughList() {
   getAnimeEpisodes(plan_to_watch_table, plan_to_watch_episodes);
 
   var tabledata = [
-    completed_names, completed_episodes, currently_names, currently_episodes,
-    onhold_names, onhold_episodes, dropped_names, dropped_episodes,
+    completed_names, completed_episodes,
+    currently_names, currently_episodes,
+    onhold_names, onhold_episodes,
+    dropped_names, dropped_episodes,
     plan_to_watch_names, plan_to_watch_episodes
   ];
 
@@ -70,29 +76,39 @@ function getAnimeNames(table, targetarray) {
 
 function getAnimeEpisodes(table, targetarray){
   $(table).find('.list-watched-ep').each(function(){
-    targetarray.push($(this).attr('data-progress') + $(this).text());
+    targetarray.push("'" + $(this).attr('data-progress') + $(this).text());
   });
 }
 
 function exportCSV(tabledata) {
-  var csv = 'Completed;;Currently Watching;;On Hold;;Dropped;;Plan to Watch\n';
-  for (var i = 0; i < tabledata[0].length; i++) {
-    csv += tabledata[0][i] + ";\n";
-  }
+  var csv = "Completed;;Currently Watching;;On Hold;;Dropped;;Plan to Watch\n" +
+            "names;episodes;names;episodes;names;episodes;names;episodes;names;episodes\n";
 
-  /*
-          schema:
-          Completed | | Currently Watching | | On Hold | | Dropped | | Plan to Watch|
-          name | episodes|name | episodes|name | episodes|name | episodes|name | episodes|
-          ...|...
-          ..............
 
-  */
-  console.log(csv);
-  if (filename.value != "") {
-    //Download with <filename.value + ".csv"> as filename
+  tabledata.forEach(function(rowItem, rowIndex) {
+    rowItem.forEach(function(colItem, colIndex) {
+      csv += colItem + ';';
+    });
+    csv += "\r\n";
+  });
+
+
+  return csv
+}
+
+function downloadcsv(file_name, text) {
+
+  if (file_name !== "") {
+    chrome.downloads.download({
+      url: 'data:text/plain;charset=utf-8,' + encodeURIComponent(text),
+      filename: file_name + ".csv",
+    });
   }
   else {
-    //Download with <filename.value = Randaris-Animelist.csv>
+    chrome.downloads.download({
+      url: 'data:text/plain;charset=utf-8,' + encodeURIComponent(text),
+      filename: "Randaris-Animelist.csv",
+    });
   }
+  message.innerText = "Success!";
 }
