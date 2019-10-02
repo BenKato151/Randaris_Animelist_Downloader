@@ -36,33 +36,34 @@ function searchThroughList() {
   var completed_episodes = [];
   getAnimeNames(completed_table, completed_names);
   getAnimeEpisodes(completed_table, completed_episodes);
+  var completed = [completed_names, completed_episodes];
 
   var onhold_names = [];
   var onhold_episodes = [];
   getAnimeNames(onhold_table, onhold_names);
   getAnimeEpisodes(onhold_table, onhold_episodes);
+  var onhold = [onhold_names, onhold_episodes]
 
   var dropped_names = [];
   var dropped_episodes = [];
   getAnimeNames(dropped_table, dropped_names);
   getAnimeEpisodes(dropped_table, dropped_episodes);
+  var dropped = [dropped_names, dropped_episodes];
 
   var currently_names = [];
   var currently_episodes = [];
   getAnimeNames(currently_table, currently_names);
   getAnimeEpisodes(currently_table, currently_episodes);
+  var currently = [currently_names, currently_episodes];
 
   var plan_to_watch_names = [];
   var plan_to_watch_episodes = [];
   getAnimeNames(plan_to_watch_table, plan_to_watch_names);
   getAnimeEpisodes(plan_to_watch_table, plan_to_watch_episodes);
+  var plan_to_watch = [plan_to_watch_names, plan_to_watch_episodes];
 
   var tabledata = [
-    completed_names, completed_episodes,
-    currently_names, currently_episodes,
-    onhold_names, onhold_episodes,
-    dropped_names, dropped_episodes,
-    plan_to_watch_names, plan_to_watch_episodes
+    completed, currently,onhold, dropped, plan_to_watch
   ];
 
   return tabledata;
@@ -83,15 +84,16 @@ function getAnimeEpisodes(table, targetarray){
 function exportCSV(tabledata) {
   var csv = "Completed;;Currently Watching;;On Hold;;Dropped;;Plan to Watch\n" +
             "names;episodes;names;episodes;names;episodes;names;episodes;names;episodes\n";
-
+  //Get the fucking right order. Maybe dictionarys or a tabledata.sort() will help? I guess. Lol..
 
   tabledata.forEach(function(rowItem, rowIndex) {
     rowItem.forEach(function(colItem, colIndex) {
-      csv += colItem + ';';
+      colItem.forEach(function(singleItem, singleItemIndex) {
+        csv += singleItem + ';';
+      });
+      csv += "\r\n";
     });
-    csv += "\r\n";
   });
-
 
   return csv
 }
@@ -111,4 +113,11 @@ function downloadcsv(file_name, text) {
     });
   }
   message.innerText = "Success!";
+}
+
+var btn = document.getElementById("btn")
+if (btn) {
+  btn.addEventListener("click", function(){
+    getAnimelist();
+  });
 }

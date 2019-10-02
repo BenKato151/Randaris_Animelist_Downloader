@@ -4,7 +4,7 @@
   "description": "You can download your animelist easily with this extension.",
   "permissions": ["declarativeContent", "storage", "https://randaris-app/*", "tabs", "<all_urls>", "downloads"],
   "background": {
-      "scripts": ["Scripts/background.js", "Scripts/download.js", "Scripts/getPagesSource.js"],
+      "scripts": ["Scripts/background.js", "Scripts/download.js", "Scripts/getPagesSource.js", "Scripts/jquery-3.4.1.min.js"],
       "persistent": false
     },
   "manifest_version": 2,

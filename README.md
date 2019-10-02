@@ -3,7 +3,7 @@ You can download your own randaris animelist as a .csv (excel document).
 
 How to download my animelist?
   Go to your randaris animelist and in the search bar will be a icon.
-  Click on it and then on download.
+  Click on it, maybe give the file a name and then on download.
   Your animelist will be downloaded in the browser.
 
 How to get involved:
@@ -15,5 +15,6 @@ How to get involved:
 
 TODO:
   Replace icons (example icons from google devs)
-  CSV Export have to be fixed!
-  Can't formate the optimal schema 
+  Can't formate the optimal schema
+  Firefox Addon
+  Pay 5$ to Google to puplish this on Google Web Store
