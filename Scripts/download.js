@@ -58,7 +58,7 @@ function searchThroughList() {
     dropped_names, dropped_episodes,
     plan_to_watch_names, plan_to_watch_episodes
   ];
-  console.log(tabledata);
+  
   return tabledata;
 }
 
