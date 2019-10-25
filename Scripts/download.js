@@ -102,13 +102,13 @@ function downloadcsv(file_name, text) {
 
   if (file_name !== "") {
     chrome.downloads.download({
-      url: 'data:text/plain;charset=utf-8,' + encodeURIComponent(text),
+      url: 'data:text/csv;charset=utf-8,' + encodeURIComponent(text),
       filename: file_name + ".csv",
     });
   }
   else {
     chrome.downloads.download({
-      url: 'data:text/plain;charset=utf-8,' + encodeURIComponent(text),
+      url: 'data:text/csv;charset=utf-8,' + encodeURIComponent(text),
       filename: "Randaris-Animelist.csv",
     });
   }
