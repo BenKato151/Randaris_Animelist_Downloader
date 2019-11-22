@@ -9,6 +9,7 @@ function getAnimelist() {
   chrome.runtime.onMessage.addListener(function(request, sender) {
     if (request.action == "getSource") {
       saving.innerHTML = request.source;
+      //if source code of the list is loaded into page the download will start
       downloadcsv(filename.value,
         exportCSV(searchThroughList())
       );
@@ -17,6 +18,7 @@ function getAnimelist() {
 
   chrome.tabs.executeScript(null, {
     file: "Scripts/getPagesSource.js"
+    //Load source code of the animelist into the index.html, so I can read all of that easily
   }, function() {
     if (chrome.runtime.lastError) {
       message.innerText = 'Something went wrong!';
@@ -26,6 +28,8 @@ function getAnimelist() {
 }
 
 function searchThroughList() {
+
+  // Saves the anime info as 2d arrays [names][episodes]
   var completed_table = document.querySelector('[data-id="completed"]');
   var onhold_table = document.querySelector('[data-id="on-hold"]');
   var dropped_table = document.querySelector('[data-id="dropped"]');
@@ -70,31 +74,37 @@ function searchThroughList() {
 }
 
 function getAnimeNames(table, targetarray) {
+  // Anime-Names are basically links and I write the text of the links into an array
   $(table).find('a').each(function() {
     targetarray.push($(this).text());
   });
 }
 
 function getAnimeEpisodes(table, targetarray){
+  // Excel etc. will take this as a date format and bc of that I need that little trick for converting
   $(table).find('.list-watched-ep').each(function(){
-    targetarray.push("'" + $(this).attr('data-progress') + $(this).text());
+    targetarray.push($(this).attr('data-progress') + $(this).text() + "'");
   });
 }
 
+// Nice to have: Add functions and implement all the other infos from the Animelist
+
 function exportCSV(tabledata) {
+  // This function would blow up so I had to outsource it in a new up blowed function xD
   var csv = "Completed;;Currently Watching;;On Hold;;Dropped;;Plan to Watch\n" +
             "names;episodes;names;episodes;names;episodes;names;episodes;names;episodes\n";
-  //Get the fucking right order. Maybe dictionarys or a tabledata.sort() will help? I guess. Lol..
-
   csv += CreateStringFromTable(tabledata);
-
   return csv;
 }
 
 function CreateStringFromTable(tabledata) {
+  // This function checks, which array have the largest length and iterate over this.
+  // if one array is finished, the undefined value is set to empty string.
+  // And now... Magic is happen!
+  // While the iteration, the csv will join for each field. And this simply thing took me a lot of time and existential crisis xDD
+  // Thanks to my rubber duck A. :)
+
   var csvstring = "";
-  var tableclass = document.querySelector(".savingTable");
-  var table = "<table border='1px'>";
   var completed = tabledata[0];
   var currently = tabledata[1];
   var onhold = tabledata[2];
@@ -120,10 +130,11 @@ function CreateStringFromTable(tabledata) {
         ptw[1][i] = "";
       }
 
-      table += "<tr><td>" + completed[0][i] + "</td><td>" + completed[1][i]  + "</td>" +
-                "<td>" + currently[0][i] + "</td><td>" + currently[1][i]  + "</td>" +
-                "<td>" + onhold[0][i] + "</td><td>" + onhold[1][i]  + "</td>" +
-                "<td>" + ptw[0][i] + "</td><td>" + ptw[1][i]  + "</td></tr>";
+      csvstring +=  completed[0][i] + ";" + completed[1][i]  + ";" +
+                    currently[0][i] + ";" + currently[1][i]  + ";" +
+                    onhold[0][i] + ";" + onhold[1][i]  + ";" +
+                    dropped[0][i] + ";" + dropped[1][i]  + ";" +
+                    ptw[0][i] + ";" + ptw[1][i]  + ";\n";
     }
   }
 
@@ -146,10 +157,11 @@ function CreateStringFromTable(tabledata) {
         ptw[1][i] = "";
       }
 
-      table += "<tr><td>" + completed[0][i] + "</td><td>" + completed[1][i]  + "</td>" +
-                "<td>" + currrently[0][i] + "</td><td>" + currently[1][i]  + "</td>" +
-                "<td>" + onhold[0][i] + "</td><td>" + onhold[1][i]  + "</td>" +
-                "<td>" + ptw[0][i] + "</td><td>" + ptw[1][i]  + "</td></tr>";
+      csvstring +=  completed[0][i] + ";" + completed[1][i]  + ";" +
+                    currently[0][i] + ";" + currently[1][i]  + ";" +
+                    onhold[0][i] + ";" + onhold[1][i]  + ";" +
+                    dropped[0][i] + ";" + dropped[1][i]  + ";" +
+                    ptw[0][i] + ";" + ptw[1][i]  + ";\n";
     }
   }
 
@@ -172,10 +184,11 @@ function CreateStringFromTable(tabledata) {
         ptw[1][i] = "";
       }
 
-      table += "<tr><td>" + completed[0][i] + "</td><td>" + completed[1][i]  + "</td>" +
-                "<td>" + currrently[0][i] + "</td><td>" + currently[1][i]  + "</td>" +
-                "<td>" + onhold[0][i] + "</td><td>" + onhold[1][i]  + "</td>" +
-                "<td>" + ptw[0][i] + "</td><td>" + ptw[1][i]  + "</td></tr>";
+      csvstring +=  completed[0][i] + ";" + completed[1][i]  + ";" +
+                    currently[0][i] + ";" + currently[1][i]  + ";" +
+                    onhold[0][i] + ";" + onhold[1][i]  + ";" +
+                    dropped[0][i] + ";" + dropped[1][i]  + ";" +
+                    ptw[0][i] + ";" + ptw[1][i]  + ";\n";
     }
   }
 
@@ -198,10 +211,11 @@ function CreateStringFromTable(tabledata) {
         ptw[1][i] = "";
       }
 
-      table += "<tr><td>" + completed[0][i] + "</td><td>" + completed[1][i]  + "</td>" +
-                "<td>" + currrently[0][i] + "</td><td>" + currently[1][i]  + "</td>" +
-                "<td>" + onhold[0][i] + "</td><td>" + onhold[1][i]  + "</td>" +
-                "<td>" + ptw[0][i] + "</td><td>" + ptw[1][i]  + "</td></tr>";
+      csvstring +=  completed[0][i] + ";" + completed[1][i]  + ";" +
+                    currently[0][i] + ";" + currently[1][i]  + ";" +
+                    onhold[0][i] + ";" + onhold[1][i]  + ";" +
+                    dropped[0][i] + ";" + dropped[1][i]  + ";" +
+                    ptw[0][i] + ";" + ptw[1][i]  + ";\n";
     }
   }
 
@@ -224,23 +238,21 @@ function CreateStringFromTable(tabledata) {
         dropped[1][i] = "";
       }
 
-      table += "<tr><td>" + completed[0][i] + "</td><td>" + completed[1][i]  + "</td>" +
-                "<td>" + currrently[0][i] + "</td><td>" + currently[1][i]  + "</td>" +
-                "<td>" + onhold[0][i] + "</td><td>" + onhold[1][i]  + "</td>" +
-                "<td>" + ptw[0][i] + "</td><td>" + ptw[1][i]  + "</td></tr>";
+      csvstring +=  completed[0][i] + ";" + completed[1][i]  + ";" +
+                    currently[0][i] + ";" + currently[1][i]  + ";" +
+                    onhold[0][i] + ";" + onhold[1][i]  + ";" +
+                    dropped[0][i] + ";" + dropped[1][i]  + ";" +
+                    ptw[0][i] + ";" + ptw[1][i]  + ";\n";
     }
   }
-
-  //Create Table inside of hidden html-container
-  $(tableclass).append(table);
-
-  //write with jquery the table into csvstring
-
+  else {
+      return null;
+  }
   return csvstring;
 }
 
 function downloadcsv(file_name, text) {
-
+  // Finally the download will start.
   if (file_name !== "") {
     chrome.downloads.download({
       url: 'data:text/csv;charset=utf-8,' + encodeURIComponent(text),
@@ -257,9 +269,13 @@ function downloadcsv(file_name, text) {
   message.innerText = "Success!";
 }
 
+// Because of CSP from google I had to add an listener here. No inline-scripting is allowed. sadly xD
 var btn = document.getElementById("btn")
 if (btn) {
   btn.addEventListener("click", function(){
     getAnimelist();
   });
 }
+
+// I am glad I finished the first version of it. Now.
+// Thx for reading!

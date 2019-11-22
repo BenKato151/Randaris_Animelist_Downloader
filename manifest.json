@@ -1,6 +1,6 @@
 {
   "name": "Randaris Animelist Downloader",
-  "version": "0.1",
+  "version": "0.9",
   "description": "You can download your animelist easily with this extension.",
   "permissions": ["declarativeContent", "storage", "https://randaris-app/*", "tabs", "<all_urls>", "downloads"],
   "background": {
