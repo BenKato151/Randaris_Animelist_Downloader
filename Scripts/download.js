@@ -86,16 +86,157 @@ function exportCSV(tabledata) {
             "names;episodes;names;episodes;names;episodes;names;episodes;names;episodes\n";
   //Get the fucking right order. Maybe dictionarys or a tabledata.sort() will help? I guess. Lol..
 
-  tabledata.forEach(function(rowItem, rowIndex) {
-    rowItem.forEach(function(colItem, colIndex) {
-      colItem.forEach(function(singleItem, singleItemIndex) {
-        csv += singleItem + ';';
-      });
-      csv += "\r\n";
-    });
-  });
+  csv += CreateStringFromTable(tabledata);
 
-  return csv
+  return csv;
+}
+
+function CreateStringFromTable(tabledata) {
+  var csvstring = "";
+  var tableclass = document.querySelector(".savingTable");
+  var table = "<table border='1px'>";
+  var completed = tabledata[0];
+  var currently = tabledata[1];
+  var onhold = tabledata[2];
+  var dropped = tabledata[3];
+  var ptw = tabledata[4];
+
+  if (completed[0].length >= currently[0].length && completed[0].length >= onhold[0].length && completed[0].length >= dropped[0].length && completed[0].length >= ptw[0].length) {
+    for (var i = 0; i < completed[0].length; i++) {
+      if (currently[0][i] === undefined) {
+        currently[0][i] = "";
+        currently[1][i] = "";
+      }
+      if (onhold[0][i] === undefined) {
+        onhold[0][i] = "";
+        onhold[1][i] = "";
+      }
+      if (dropped[0][i] === undefined) {
+        dropped[0][i] = "";
+        dropped[1][i] = "";
+      }
+      if (ptw[0][i] === undefined) {
+        ptw[0][i] = "";
+        ptw[1][i] = "";
+      }
+
+      table += "<tr><td>" + completed[0][i] + "</td><td>" + completed[1][i]  + "</td>" +
+                "<td>" + currently[0][i] + "</td><td>" + currently[1][i]  + "</td>" +
+                "<td>" + onhold[0][i] + "</td><td>" + onhold[1][i]  + "</td>" +
+                "<td>" + ptw[0][i] + "</td><td>" + ptw[1][i]  + "</td></tr>";
+    }
+  }
+
+  else if (currently[0].length >= completed[0].length && currently[0].length >= onhold[0].length && currently[0].length >= dropped[0].length && currently[0].length >= ptw[0].length) {
+    for (var i = 0; i < completed[0].length; i++) {
+      if (completed[0][i] === undefined) {
+        completed[0][i] = "";
+        completed[1][i] = "";
+      }
+      if (onhold[0][i] === undefined) {
+        onhold[0][i] = "";
+        onhold[1][i] = "";
+      }
+      if (dropped[0][i] === undefined) {
+        dropped[0][i] = "";
+        dropped[1][i] = "";
+      }
+      if (ptw[0][i] === undefined) {
+        ptw[0][i] = "";
+        ptw[1][i] = "";
+      }
+
+      table += "<tr><td>" + completed[0][i] + "</td><td>" + completed[1][i]  + "</td>" +
+                "<td>" + currrently[0][i] + "</td><td>" + currently[1][i]  + "</td>" +
+                "<td>" + onhold[0][i] + "</td><td>" + onhold[1][i]  + "</td>" +
+                "<td>" + ptw[0][i] + "</td><td>" + ptw[1][i]  + "</td></tr>";
+    }
+  }
+
+  else if (onhold[0].length >= completed[0].length && onhold[0].length >= currently[0].length && onhold[0].length >= dropped[0].length && onhold[0].length >= ptw[0].length) {
+    for (var i = 0; i < completed[0].length; i++) {
+      if (completed[0][i] === undefined) {
+        completed[0][i] = "";
+        completed[1][i] = "";
+      }
+      if (currently[0][i] === undefined) {
+        currently[0][i] = "";
+        currently[1][i] = "";
+      }
+      if (dropped[0][i] === undefined) {
+        dropped[0][i] = "";
+        dropped[1][i] = "";
+      }
+      if (ptw[0][i] === undefined) {
+        ptw[0][i] = "";
+        ptw[1][i] = "";
+      }
+
+      table += "<tr><td>" + completed[0][i] + "</td><td>" + completed[1][i]  + "</td>" +
+                "<td>" + currrently[0][i] + "</td><td>" + currently[1][i]  + "</td>" +
+                "<td>" + onhold[0][i] + "</td><td>" + onhold[1][i]  + "</td>" +
+                "<td>" + ptw[0][i] + "</td><td>" + ptw[1][i]  + "</td></tr>";
+    }
+  }
+
+  else if (dropped[0].length >= completed[0].length && dropped[0].length >= currently[0].length && dropped[0].length >= onhold[0].length && dropped[0].length >= ptw[0].length) {
+    for (var i = 0; i < completed[0].length; i++) {
+      if (completed[0][i] === undefined) {
+        completed[0][i] = "";
+        completed[1][i] = "";
+      }
+      if (currently[0][i] === undefined) {
+        currently[0][i] = "";
+        currently[1][i] = "";
+      }
+      if (onhold[0][i] === undefined) {
+        onhold[0][i] = "";
+        onhold[1][i] = "";
+      }
+      if (ptw[0][i] === undefined) {
+        ptw[0][i] = "";
+        ptw[1][i] = "";
+      }
+
+      table += "<tr><td>" + completed[0][i] + "</td><td>" + completed[1][i]  + "</td>" +
+                "<td>" + currrently[0][i] + "</td><td>" + currently[1][i]  + "</td>" +
+                "<td>" + onhold[0][i] + "</td><td>" + onhold[1][i]  + "</td>" +
+                "<td>" + ptw[0][i] + "</td><td>" + ptw[1][i]  + "</td></tr>";
+    }
+  }
+
+  else if (ptw[0].length >= completed[0].length && ptw[0].length >= currently[0] && ptw[0].length >= onhold[0].length && ptw[0].length >= dropped[0].length) {
+    for (var i = 0; i < ptw[0].length; i++) {
+      if (completed[0][i] === undefined) {
+        completed[0][i] = "";
+        completed[1][i] = "";
+      }
+      if (currently[0][i] === undefined) {
+        currently[0][i] = "";
+        currently[1][i] = "";
+      }
+      if (onhold[0][i] === undefined) {
+        onhold[0][i] = "";
+        onhold[1][i] = "";
+      }
+      if (dropped[0][i] === undefined) {
+        dropped[0][i] = "";
+        dropped[1][i] = "";
+      }
+
+      table += "<tr><td>" + completed[0][i] + "</td><td>" + completed[1][i]  + "</td>" +
+                "<td>" + currrently[0][i] + "</td><td>" + currently[1][i]  + "</td>" +
+                "<td>" + onhold[0][i] + "</td><td>" + onhold[1][i]  + "</td>" +
+                "<td>" + ptw[0][i] + "</td><td>" + ptw[1][i]  + "</td></tr>";
+    }
+  }
+
+  //Create Table inside of hidden html-container
+  $(tableclass).append(table);
+
+  //write with jquery the table into csvstring
+
+  return csvstring;
 }
 
 function downloadcsv(file_name, text) {
@@ -112,6 +253,7 @@ function downloadcsv(file_name, text) {
       filename: "Randaris-Animelist.csv",
     });
   }
+
   message.innerText = "Success!";
 }
 
