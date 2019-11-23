@@ -76,7 +76,7 @@ function searchThroughList() {
 function getAnimeNames(table, targetarray) {
   // Anime-Names are basically links and I write the text of the links into an array
   $(table).find('a').each(function() {
-    targetarray.push($(this).text());
+    targetarray.push('"' + $(this).text() + '"');
   });
 }
 
@@ -132,9 +132,9 @@ function CreateStringFromTable(tabledata) {
 
       csvstring +=  completed[0][i] + ";" + completed[1][i]  + ";" +
                     currently[0][i] + ";" + currently[1][i]  + ";" +
-                    onhold[0][i] + ";" + onhold[1][i]  + ";" +
-                    dropped[0][i] + ";" + dropped[1][i]  + ";" +
-                    ptw[0][i] + ";" + ptw[1][i]  + ";\n";
+                    onhold[0][i]    + ";" + onhold[1][i]     + ";" +
+                    dropped[0][i]   + ";" + dropped[1][i]    + ";" +
+                    ptw[0][i]       + ";" + ptw[1][i]        + ";\n";
     }
   }
 
@@ -159,9 +159,9 @@ function CreateStringFromTable(tabledata) {
 
       csvstring +=  completed[0][i] + ";" + completed[1][i]  + ";" +
                     currently[0][i] + ";" + currently[1][i]  + ";" +
-                    onhold[0][i] + ";" + onhold[1][i]  + ";" +
-                    dropped[0][i] + ";" + dropped[1][i]  + ";" +
-                    ptw[0][i] + ";" + ptw[1][i]  + ";\n";
+                    onhold[0][i]    + ";" + onhold[1][i]     + ";" +
+                    dropped[0][i]   + ";" + dropped[1][i]    + ";" +
+                    ptw[0][i]       + ";" + ptw[1][i]        + ";\n";
     }
   }
 
@@ -186,9 +186,9 @@ function CreateStringFromTable(tabledata) {
 
       csvstring +=  completed[0][i] + ";" + completed[1][i]  + ";" +
                     currently[0][i] + ";" + currently[1][i]  + ";" +
-                    onhold[0][i] + ";" + onhold[1][i]  + ";" +
-                    dropped[0][i] + ";" + dropped[1][i]  + ";" +
-                    ptw[0][i] + ";" + ptw[1][i]  + ";\n";
+                    onhold[0][i]    + ";" + onhold[1][i]     + ";" +
+                    dropped[0][i]   + ";" + dropped[1][i]    + ";" +
+                    ptw[0][i]       + ";" + ptw[1][i]        + ";\n";
     }
   }
 
@@ -213,9 +213,9 @@ function CreateStringFromTable(tabledata) {
 
       csvstring +=  completed[0][i] + ";" + completed[1][i]  + ";" +
                     currently[0][i] + ";" + currently[1][i]  + ";" +
-                    onhold[0][i] + ";" + onhold[1][i]  + ";" +
-                    dropped[0][i] + ";" + dropped[1][i]  + ";" +
-                    ptw[0][i] + ";" + ptw[1][i]  + ";\n";
+                    onhold[0][i]    + ";" + onhold[1][i]     + ";" +
+                    dropped[0][i]   + ";" + dropped[1][i]    + ";" +
+                    ptw[0][i]       + ";" + ptw[1][i]        + ";\n";
     }
   }
 
@@ -240,9 +240,9 @@ function CreateStringFromTable(tabledata) {
 
       csvstring +=  completed[0][i] + ";" + completed[1][i]  + ";" +
                     currently[0][i] + ";" + currently[1][i]  + ";" +
-                    onhold[0][i] + ";" + onhold[1][i]  + ";" +
-                    dropped[0][i] + ";" + dropped[1][i]  + ";" +
-                    ptw[0][i] + ";" + ptw[1][i]  + ";\n";
+                    onhold[0][i]    + ";" + onhold[1][i]     + ";" +
+                    dropped[0][i]   + ";" + dropped[1][i]    + ";" +
+                    ptw[0][i]       + ";" + ptw[1][i]        + ";\n";
     }
   }
   else {
