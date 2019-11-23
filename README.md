@@ -14,4 +14,3 @@ How to get involved:
 
 TODO:
   - Replace icons (example icons from google devs)
-  - Fix csv style

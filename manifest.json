@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Randaris Animelist Downloader",
-  "version": "0.1",
+  "version": "0.9",
   "description": "You can download your animelist easily with this extension.",
   "homepage_url": "https://github.com/BenKato151/Randaris_Animelist_Downloader/",
   "icons": {
@@ -14,7 +14,7 @@
   "content_scripts": [
     {
       "matches": ["*://*.randaris.app/*"],
-      "js": ["Scripts/jquery-3.4.1.min.js", "getPagesSource.js", "Scripts/download.js"]
+      "js": ["Scripts/jquery-3.4.1.min.js", "Scripts/getPagesSource.js", "Scripts/download.js"]
     }
   ],
 

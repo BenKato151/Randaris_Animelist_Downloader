@@ -28,6 +28,7 @@ function DOMtoString(document_root) {
   return html;
 }
 
+// Sends the result (source code) to download.js
 browser.runtime.sendMessage({
   source: DOMtoString(document)
 });
